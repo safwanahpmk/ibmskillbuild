@@ -1,159 +1,130 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Audit Jadual Waktu — Politeknik Melaka</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aduan & Kepuasan Pelanggan | Politeknik Melaka</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { background: var(--bg); display:flex; flex-direction:column; min-height:100vh; }
+  .index-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem 1rem; }
+  .index-logo { font-size:3rem; margin-bottom:.5rem; }
+  .index-title { font-size:1.6rem; font-weight:800; color:var(--primary); text-align:center; }
+  .index-sub   { color:var(--muted); text-align:center; margin-top:.35rem; }
+  .role-cards  { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:2rem; width:100%; max-width:580px; }
+  @media(max-width:460px){ .role-cards { grid-template-columns:1fr; } }
+  .role-card {
+    background:var(--card); border:2px solid var(--border); border-radius:12px;
+    padding:2rem 1.5rem; text-align:center; cursor:pointer; text-decoration:none;
+    display:flex; flex-direction:column; align-items:center; gap:.75rem;
+    transition:all .15s; box-shadow:var(--shadow);
+  }
+  .role-card:hover { border-color:var(--teal); box-shadow:0 6px 20px rgba(13,148,136,.2); transform:translateY(-3px); text-decoration:none; }
+  .role-card .rc-icon  { font-size:3rem; }
+  .role-card .rc-label { font-size:1.1rem; font-weight:700; color:var(--primary); }
+  .role-card .rc-desc  { font-size:.82rem; color:var(--muted); line-height:1.5; }
+  .role-card .rc-btn   { margin-top:.5rem; background:var(--teal); color:#fff; padding:.45rem 1rem; border-radius:6px; font-size:.85rem; font-weight:700; }
+  .demo-info { max-width:580px; width:100%; margin-top:1.5rem; }
+  .aliran-steps { display:flex; flex-direction:column; gap:.5rem; }
+  .aliran-step  { display:flex; gap:.75rem; align-items:flex-start; font-size:.85rem; }
+  .aliran-step .sn { width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem; }
+</style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="header-brand">
-        <div class="header-logo">PMK</div>
-        <div>
-          <div class="header-title">Dashboard Audit Jadual Waktu</div>
-          <div class="header-sub">Politeknik Melaka — Sistem Semakan Penyelaras</div>
+<div class="proto-banner">
+  ⚠️ <strong>PROTOTAIP DEMO</strong> — Aplikasi demonstrasi untuk Unit Komunikasi Korporat (UKK) Politeknik Melaka. Data disimpan dalam pelayar.
+</div>
+
+<div class="index-wrap">
+  <div class="index-logo">📋</div>
+  <div class="index-title">Aduan &amp; Kepuasan Pelanggan</div>
+  <div class="index-sub">Politeknik Melaka — Unit Komunikasi Korporat (UKK)</div>
+
+  <div class="role-cards">
+    <a href="portal.html" class="role-card">
+      <span class="rc-icon">🌐</span>
+      <span class="rc-label">Portal Pelanggan</span>
+      <span class="rc-desc">Hantar aduan, semak status dan nilai pengendalian aduan</span>
+      <span class="rc-btn">Buka Portal →</span>
+    </a>
+    <a href="dashboard.html" class="role-card">
+      <span class="rc-icon">📊</span>
+      <span class="rc-label">Dashboard UKK</span>
+      <span class="rc-desc">Urus aduan, pantau prestasi dan jana laporan</span>
+      <span class="rc-btn">Buka Dashboard →</span>
+    </a>
+  </div>
+
+  <!-- Panduan Aliran Demo -->
+  <div class="demo-info">
+    <div class="card card-sm mt-4">
+      <h3 class="mb-3">🎯 Aliran Demo Lengkap</h3>
+      <div class="aliran-steps">
+        <div class="aliran-step">
+          <span class="sn">1</span>
+          <div><strong>Portal:</strong> Buka <a href="portal.html">Portal Pelanggan</a> → klik "Hantar Aduan" → isi borang → dapatkan nombor rujukan</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">2</span>
+          <div><strong>Portal:</strong> Klik "Semak Status Aduan" → masukkan nombor rujukan + e-mel → lihat status</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">3</span>
+          <div><strong>UKK Dashboard:</strong> Buka <a href="dashboard.html">Dashboard UKK</a> → lihat aduan baharu dalam jadual → klik "Urus →"</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">4</span>
+          <div><strong>UKK:</strong> Dalam modal → pilih PTJ &amp; tarikh sasaran → klik "Tetapkan PTJ"</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">5</span>
+          <div><strong>PTJ:</strong> Dalam modal yang sama → isi tindakan PTJ → pilih "Siap — Hantar Kepada UKK"</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">6</span>
+          <div><strong>UKK:</strong> Semak jawapan PTJ → tulis maklum balas → klik "Tutup Aduan"</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">7</span>
+          <div><strong>Portal:</strong> Semak status aduan yang ditutup → klik "Nilai Pengendalian Aduan" → isi penilaian</div>
+        </div>
+        <div class="aliran-step">
+          <span class="sn">8</span>
+          <div><strong>UKK Dashboard:</strong> Semak skrin "Kepuasan" dan "Laporan" untuk melihat data dikemas kini</div>
         </div>
       </div>
-      <div class="header-actions">
-        <label class="btn btn-primary" for="csvInput">
-          &#8679; Import CSV
-        </label>
-        <input type="file" id="csvInput" accept=".csv" style="display:none" />
-        <a href="sample_jadual.csv" download class="btn btn-outline">&#8681; Muat Turun CSV Contoh</a>
+
+      <hr class="divider">
+
+      <h4 class="mb-2">📋 Data Rekaan Disediakan</h4>
+      <div style="font-size:.82rem;line-height:1.8;color:var(--muted)">
+        12 aduan rekaan merangkumi: <strong>4 ditutup</strong> (3 ada penilaian, 1 tiada) ·
+        <strong>2 lewat sasaran</strong> (ADU-2025-005 &amp; ADU-2025-011) ·
+        <strong>Semua status</strong> dari Diterima hingga Maklum Balas Dihantar ·
+        <strong>Pelbagai PTJ</strong>: JKE, HEP, PTM, JPP, JKA
+      </div>
+
+      <hr class="divider">
+
+      <h4 class="mb-2">🔍 Senario Ujian Demo</h4>
+      <div style="font-size:.82rem;line-height:1.9;color:var(--muted)">
+        ✓ Aduan lewat muncul di bahagian atas jadual (baris merah)<br>
+        ✓ Aduan belum ditutup — butang "Nilai" tidak muncul di portal<br>
+        ✓ Respons berganda disekat — cuba nilai aduan yang sudah dinilai (ADU-2025-001)<br>
+        ✓ Pengesahan semak status — nombor rujukan + e-mel mesti sepadan<br>
+        ✓ Carta dikemas kini apabila penapis diubah<br>
+        ✓ Eksport CSV menggunakan data yang sama dengan jadual<br>
+        ✓ Laporan memaparkan angka yang sepadan dengan rekod<br>
+        ✓ Keadaan tiada aduan — kosongkan penapis tempoh ke bulan yang tiada data<br>
+        ✓ Tiada respons kepuasan — skrin Kepuasan papar "Belum ada respons"
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- MAIN -->
-  <main class="main">
-
-    <!-- EMPTY STATE -->
-    <div id="emptyState" class="empty-state">
-      <div class="empty-icon">📋</div>
-      <h2>Tiada Data Dimuatkan</h2>
-      <p>Import fail CSV jadual waktu untuk memulakan audit.</p>
-      <label class="btn btn-primary btn-lg" for="csvInput">Import CSV Sekarang</label>
-      <p class="hint">Atau muat turun <a href="sample_jadual.csv" download>CSV contoh</a> untuk cuba.</p>
-    </div>
-
-    <!-- DASHBOARD CONTENT (hidden until CSV loaded) -->
-    <div id="dashContent" class="hidden">
-
-      <!-- STATS ROW -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-num" id="statTotal">0</div>
-          <div class="stat-label">Jumlah Slot</div>
-        </div>
-        <div class="stat-card stat-danger">
-          <div class="stat-num" id="statPertindihan">0</div>
-          <div class="stat-label">Pertindihan</div>
-        </div>
-        <div class="stat-card stat-warning">
-          <div class="stat-num" id="statTidakLengkap">0</div>
-          <div class="stat-label">Tidak Lengkap</div>
-        </div>
-        <div class="stat-card stat-warning">
-          <div class="stat-num" id="statLebihKapasiti">0</div>
-          <div class="stat-label">Lebih Kapasiti</div>
-        </div>
-        <div class="stat-card stat-info">
-          <div class="stat-num" id="statBebanBerlebihan">0</div>
-          <div class="stat-label">Beban Berlebihan</div>
-        </div>
-        <div class="stat-card stat-success">
-          <div class="stat-num" id="statOK">0</div>
-          <div class="stat-label">Tiada Isu</div>
-        </div>
-      </div>
-
-      <!-- FILTER BAR -->
-      <div class="filter-bar">
-        <div class="filter-group">
-          <label>Hari</label>
-          <select id="filterHari"><option value="">Semua Hari</option></select>
-        </div>
-        <div class="filter-group">
-          <label>Program</label>
-          <select id="filterProgram"><option value="">Semua Program</option></select>
-        </div>
-        <div class="filter-group">
-          <label>Pensyarah</label>
-          <select id="filterPensyarah"><option value="">Semua Pensyarah</option></select>
-        </div>
-        <div class="filter-group">
-          <label>Jenis Isu</label>
-          <select id="filterIsu">
-            <option value="">Semua</option>
-            <option value="pertindihan_pensyarah">Pertindihan Pensyarah</option>
-            <option value="pertindihan_bilik">Pertindihan Bilik</option>
-            <option value="tidak_lengkap">Tidak Lengkap</option>
-            <option value="lebih_kapasiti">Lebih Kapasiti</option>
-            <option value="beban_berlebihan">Beban Berlebihan</option>
-            <option value="ok">Tiada Isu</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Cari</label>
-          <input type="text" id="filterCari" placeholder="Kursus / bilik / pensyarah..." />
-        </div>
-        <button class="btn btn-outline btn-sm" id="btnResetFilter">&#10005; Set Semula</button>
-      </div>
-
-      <!-- LEGEND -->
-      <div class="legend">
-        <span class="badge badge-danger">&#9679; Pertindihan Pensyarah</span>
-        <span class="badge badge-orange">&#9679; Pertindihan Bilik</span>
-        <span class="badge badge-warning">&#9679; Tidak Lengkap</span>
-        <span class="badge badge-purple">&#9679; Lebih Kapasiti</span>
-        <span class="badge badge-info">&#9679; Beban Berlebihan</span>
-        <span class="badge badge-success">&#9679; Tiada Isu</span>
-      </div>
-
-      <!-- TABLE TOOLBAR -->
-      <div class="table-toolbar">
-        <div class="table-info" id="tableInfo">Memuatkan...</div>
-        <div class="toolbar-right">
-          <span class="anggaran-label">Anggaran masa semakan:</span>
-          <span class="anggaran-val" id="anggaranMasa">—</span>
-          <button class="btn btn-primary btn-sm" id="btnExport">&#8681; Eksport Isu (CSV)</button>
-        </div>
-      </div>
-
-      <!-- TABLE -->
-      <div class="table-wrap">
-        <table class="jadual-table" id="jadualTable">
-          <thead>
-            <tr>
-              <th>Slot ID</th>
-              <th>Hari</th>
-              <th>Masa</th>
-              <th>Pensyarah</th>
-              <th>Kod Kursus</th>
-              <th>Nama Kursus</th>
-              <th>Program</th>
-              <th>Sem</th>
-              <th>Bilik</th>
-              <th>Kapasiti</th>
-              <th>Pelajar</th>
-              <th>Isu</th>
-              <th>Status Tindakan</th>
-            </tr>
-          </thead>
-          <tbody id="jadualBody"></tbody>
-        </table>
-      </div>
-
-    </div><!-- end dashContent -->
-  </main>
-
-  <footer class="footer">
-    Dashboard Audit Jadual Waktu &mdash; Politeknik Melaka &copy; 2025
-  </footer>
-
-  <script src="app.js"></script>
+  <div class="app-footer">
+    Aduan &amp; Kepuasan Pelanggan &nbsp;|&nbsp; Politeknik Melaka &nbsp;|&nbsp; Unit Komunikasi Korporat (UKK)<br>
+    <span class="text-muted" style="font-size:.7rem">PROTOTAIP v1.0 — Data disimpan secara setempat dalam pelayar · Tiada sambungan internet diperlukan</span>
+  </div>
+</div>
 </body>
 </html>
