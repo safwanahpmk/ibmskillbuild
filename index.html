@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Audit Jadual Waktu — Politeknik Melaka</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="header-logo">PMK</div>
+        <div>
+          <div class="header-title">Dashboard Audit Jadual Waktu</div>
+          <div class="header-sub">Politeknik Melaka — Sistem Semakan Penyelaras</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <label class="btn btn-primary" for="csvInput">
+          &#8679; Import CSV
+        </label>
+        <input type="file" id="csvInput" accept=".csv" style="display:none" />
+        <a href="sample_jadual.csv" download class="btn btn-outline">&#8681; Muat Turun CSV Contoh</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h2>Tiada Data Dimuatkan</h2>
+      <p>Import fail CSV jadual waktu untuk memulakan audit.</p>
+      <label class="btn btn-primary btn-lg" for="csvInput">Import CSV Sekarang</label>
+      <p class="hint">Atau muat turun <a href="sample_jadual.csv" download>CSV contoh</a> untuk cuba.</p>
+    </div>
+
+    <!-- DASHBOARD CONTENT (hidden until CSV loaded) -->
+    <div id="dashContent" class="hidden">
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="statTotal">0</div>
+          <div class="stat-label">Jumlah Slot</div>
+        </div>
+        <div class="stat-card stat-danger">
+          <div class="stat-num" id="statPertindihan">0</div>
+          <div class="stat-label">Pertindihan</div>
+        </div>
+        <div class="stat-card stat-warning">
+          <div class="stat-num" id="statTidakLengkap">0</div>
+          <div class="stat-label">Tidak Lengkap</div>
+        </div>
+        <div class="stat-card stat-warning">
+          <div class="stat-num" id="statLebihKapasiti">0</div>
+          <div class="stat-label">Lebih Kapasiti</div>
+        </div>
+        <div class="stat-card stat-info">
+          <div class="stat-num" id="statBebanBerlebihan">0</div>
+          <div class="stat-label">Beban Berlebihan</div>
+        </div>
+        <div class="stat-card stat-success">
+          <div class="stat-num" id="statOK">0</div>
+          <div class="stat-label">Tiada Isu</div>
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label>Hari</label>
+          <select id="filterHari"><option value="">Semua Hari</option></select>
+        </div>
+        <div class="filter-group">
+          <label>Program</label>
+          <select id="filterProgram"><option value="">Semua Program</option></select>
+        </div>
+        <div class="filter-group">
+          <label>Pensyarah</label>
+          <select id="filterPensyarah"><option value="">Semua Pensyarah</option></select>
+        </div>
+        <div class="filter-group">
+          <label>Jenis Isu</label>
+          <select id="filterIsu">
+            <option value="">Semua</option>
+            <option value="pertindihan_pensyarah">Pertindihan Pensyarah</option>
+            <option value="pertindihan_bilik">Pertindihan Bilik</option>
+            <option value="tidak_lengkap">Tidak Lengkap</option>
+            <option value="lebih_kapasiti">Lebih Kapasiti</option>
+            <option value="beban_berlebihan">Beban Berlebihan</option>
+            <option value="ok">Tiada Isu</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Cari</label>
+          <input type="text" id="filterCari" placeholder="Kursus / bilik / pensyarah..." />
+        </div>
+        <button class="btn btn-outline btn-sm" id="btnResetFilter">&#10005; Set Semula</button>
+      </div>
+
+      <!-- LEGEND -->
+      <div class="legend">
+        <span class="badge badge-danger">&#9679; Pertindihan Pensyarah</span>
+        <span class="badge badge-orange">&#9679; Pertindihan Bilik</span>
+        <span class="badge badge-warning">&#9679; Tidak Lengkap</span>
+        <span class="badge badge-purple">&#9679; Lebih Kapasiti</span>
+        <span class="badge badge-info">&#9679; Beban Berlebihan</span>
+        <span class="badge badge-success">&#9679; Tiada Isu</span>
+      </div>
+
+      <!-- TABLE TOOLBAR -->
+      <div class="table-toolbar">
+        <div class="table-info" id="tableInfo">Memuatkan...</div>
+        <div class="toolbar-right">
+          <span class="anggaran-label">Anggaran masa semakan:</span>
+          <span class="anggaran-val" id="anggaranMasa">—</span>
+          <button class="btn btn-primary btn-sm" id="btnExport">&#8681; Eksport Isu (CSV)</button>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table class="jadual-table" id="jadualTable">
+          <thead>
+            <tr>
+              <th>Slot ID</th>
+              <th>Hari</th>
+              <th>Masa</th>
+              <th>Pensyarah</th>
+              <th>Kod Kursus</th>
+              <th>Nama Kursus</th>
+              <th>Program</th>
+              <th>Sem</th>
+              <th>Bilik</th>
+              <th>Kapasiti</th>
+              <th>Pelajar</th>
+              <th>Isu</th>
+              <th>Status Tindakan</th>
+            </tr>
+          </thead>
+          <tbody id="jadualBody"></tbody>
+        </table>
+      </div>
+
+    </div><!-- end dashContent -->
+  </main>
+
+  <footer class="footer">
+    Dashboard Audit Jadual Waktu &mdash; Politeknik Melaka &copy; 2025
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
